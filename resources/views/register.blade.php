@@ -32,7 +32,7 @@
             <label>Password</label>
             <input
                 id="password"
-                type="text"
+                type="password"
                 name="password"
                 text="Wpisz hasło"
                 additional="required"

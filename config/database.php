@@ -2,7 +2,19 @@
 
 use Illuminate\Support\Str;
 
-$url = parse_url(getenv("DATABASE_URL"));
+$url = env("DATABASE_URL");
+
+if($url){
+    $url = parse_url($url);
+    $url['database'] = substr($url["path"], 1);
+} else{
+    $url = [
+        'host' => env('DB_HOST', '127.0.0.1'),
+        'user' => env('DB_USERNAME', 'forge'),
+        'database' => env('DB_DATABASE', ''),
+        'pass' => env('DB_PASSWORD', ''),
+    ];
+}
 
 return [
 
@@ -70,7 +82,7 @@ return [
             'url' => env('DATABASE_URL'),
             'host' => $url["host"],
             'port' => env('DB_PORT', '5432'),
-            'database' => substr($url["path"], 1),
+            'database' => $url['database'],
             'username' => $url["user"],
             'password' => $url["pass"],
             'charset' => 'utf8',
